@@ -3,3 +3,4 @@ Werkzeug
 pymongo[srv]
 dnspython
 python-dotenv
+gunicorn
