@@ -236,6 +236,7 @@ def update_password():
 # -------------------------
 # UPLOAD PROJECT
 # -------------------------
+# UPLOAD PROJECT
 @app.route('/upload_project', methods=['POST'])
 def upload_project():
     if 'user_id' not in session:
@@ -251,72 +252,99 @@ def upload_project():
         return redirect(url_for('home'))
 
     if file and allowed_file(file.filename):
-        # Generate secure filename
         filename = secure_filename(file.filename)
 
-        # Each user gets a separate folder
+        # User-specific folder
         user_folder = os.path.join(app.config['UPLOAD_FOLDER'], session['user_id'])
         os.makedirs(user_folder, exist_ok=True)
 
-        # Full path to save zip
+        # Full path to save ZIP
         zip_path = os.path.join(user_folder, filename)
         file.save(zip_path)
 
-        # ---- Score the zip BEFORE extracting ----
+        # Score project
         final_score, categories = score_project(zip_path)
 
-        # ---- Extract the zip for browsing later ----
-        project_folder = os.path.join(user_folder, os.path.splitext(filename)[0])
+        # Extract project into its own folder
+        project_name = os.path.splitext(filename)[0]
+        project_folder = os.path.join(user_folder, project_name)
         os.makedirs(project_folder, exist_ok=True)
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(project_folder)
 
-        # Save project info and score to MongoDB
+        # Save project info in MongoDB
         projects_col.insert_one({
             "user_id": session['user_id'],
             "filename": filename,
+            "project_name": project_name,
             "folder": project_folder,   # path where files are extracted
             "score": final_score,
             "categories": categories
         })
 
-        flash(f"Project uploaded! Total Score: {final_score}")
-        return redirect(url_for('home'))
+        flash(f"Project '{project_name}' uploaded! Score: {final_score}")
+        return redirect(url_for('projects'))
     else:
         flash("Only .zip files are allowed")
         return redirect(url_for('home'))
 
-
-# -------------------------
-# PROJECT BROWSING
-# -------------------------
+# LIST PROJECTS
 @app.route('/projects')
 def projects():
-    if 'user_id' not in session: return redirect(url_for('login'))
-    user_folder = os.path.join(app.config['UPLOAD_FOLDER'], session['user_id'])
-    projects_list = os.listdir(user_folder) if os.path.exists(user_folder) else []
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    # Fetch projects from MongoDB
+    projects_list = list(projects_col.find({"user_id": session['user_id']}))
     return render_template('projects.html', projects=projects_list)
 
+# VIEW PROJECT FILES
 @app.route('/projects/<project_name>')
 def view_project(project_name):
-    if 'user_id' not in session: return redirect(url_for('login'))
-    project_folder = os.path.join(app.config['UPLOAD_FOLDER'], session['user_id'], project_name)
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    # Get project folder from DB
+    project = projects_col.find_one({
+        "user_id": session['user_id'],
+        "project_name": project_name
+    })
+    if not project:
+        return "Project not found", 404
+
+    project_folder = project['folder']
     files = []
     for root, dirs, filenames in os.walk(project_folder):
         for f in filenames:
-            rel_path = os.path.relpath(os.path.join(root,f), project_folder)
+            rel_path = os.path.relpath(os.path.join(root, f), project_folder)
             files.append(rel_path)
+
     return render_template('project_files.html', project_name=project_name, files=files)
 
+# VIEW SINGLE FILE
 @app.route('/projects/<project_name>/file/<path:filename>')
 def view_file(project_name, filename):
-    if 'user_id' not in session: return redirect(url_for('login'))
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], session['user_id'], project_name, filename)
-    if not os.path.exists(file_path): return "File not found", 404
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    project = projects_col.find_one({
+        "user_id": session['user_id'],
+        "project_name": project_name
+    })
+    if not project:
+        return "Project not found", 404
+
+    file_path = os.path.join(project['folder'], filename)
+    if not os.path.exists(file_path):
+        return "File not found", 404
+
     with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
         code_content = f.read()
+
     return render_template('view_file.html', filename=filename, code=code_content)
+
 
 # -------------------------
 if __name__ == '__main__':
     app.run(debug=True)
+
