@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in to Scorer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="header">
+            <div class="logo">DevScore</div>
+            <h1 class="title">Welcome back</h1>
+            <p class="subtitle">Sign in to your account to continue</p>
+        </div>
+        
+        <!-- Error/Success Messages (uncomment when needed) -->
+        <!-- <div class="message message-error">
+            Invalid username or password. Please try again.
+        </div> -->
+        
+        <form class="form" method="POST" action="/login">
+            <div class="input-group">
+                <label class="label" for="email">email</label>
+                <input 
+                    class="input" 
+                    type="email" 
+                    id="email"
+                    name="email" 
+                    placeholder="Enter your email"
+                    required
+                    autocomplete="email"
+                >
+            </div>
+            
+            <div class="input-group">
+                <label class="label" for="password">Password</label>
+                <input 
+                    class="input" 
+                    type="password" 
+                    id="password"
+                    name="password" 
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="current-password"
+                >
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+                Sign in
+                <!-- Loading state (uncomment when needed) -->
+                <!-- <span class="loading"></span> -->
+            </button>
+        </form>
+        
+        
+        <div class="links">
+            <a href="/forgot-password" class="link">Forgot password?</a>
+            <a href="/help" class="link">Need help?</a>
+        </div>
+        
+        <div class="register-section">
+            Don't have an account? 
+            <a href="/register" class="register-link">Sign up</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Project Files - {{ project_name }}</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/project_files.css') }}">
+
+</head>
+<body>
+<header>
+<h1>Project: {{ project_name }}</h1>
+<a href="{{ url_for('projects') }}" class="back-link">← Back to Projects</a>
+</header>
+<div class="container">
+    <ul class="file-list">
+        {% if files %}
+            {% for file in files %}
+            <li><a href="{{ url_for('view_file', project_name=project_name, filename=file) }}">{{ file }}</a></li>
+            {% endfor %}
+        {% else %}
+            <li class="no-files">No files found in this project.</li>
+        {% endif %}
+    </ul>
+</div>
+</body>
+</html>

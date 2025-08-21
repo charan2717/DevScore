@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homepage</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="{{ url_for('home') }}" class="logo">DevScore</a>
+    <ul>
+      <li><a href="{{ url_for('home') }}" class="active">Home</a></li>
+      <li><a href="{{ url_for('projects') }}">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="profile-menu" id="profileMenu">
+      <i class="fas fa-user-circle icon"></i>
+      <div class="dropdown" id="dropdownMenu">
+        <a href="{{ url_for('profile') }}"><i class="fas fa-user"></i> Profile</a>
+        <a href="{{ url_for('settings') }}"><i class="fas fa-cog"></i> Settings</a>
+        <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Hello, {{ username }}</h2>
+      <p>Your profile and terms are complete. Enjoy the app 🎉</p>
+    </div>
+
+    <div class="card">
+      <h3>Next Steps</h3>
+      <ul>
+        <li>Explore features</li>
+        <li>Check your profile</li>
+        <li>Start using the app</li>
+      </ul>
+    </div>
+
+    <!-- Project Upload Form -->
+    <form action="{{ url_for('upload_project') }}" method="POST" enctype="multipart/form-data">
+      <label for="fileUpload" class="upload-section">
+        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+        <div class="upload-text">Drag & Drop or Click to Upload Zip/Code Files</div>
+        <input type="file" id="fileUpload" name="file" accept=".zip" required />
+      </label>
+      <button type="submit">
+        Upload & Score
+      </button>
+    </form>
+
+    <!-- Last Project Score -->
+    {% if last_project %}
+    <div class="card">
+      <h3>Last Project Score</h3>
+      <p><strong>{{ last_project.filename }}</strong></p>
+      <p class="success-indicator"><strong>Total Score:</strong> {{ last_project.score }} / 100</p>
+      <ul>
+        {% for cat, val in last_project.categories.items() %}
+          <li>{{ cat }}: {{ val }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+
+  <script>
+    const profileMenu = document.getElementById('profileMenu');
+    const dropdown = document.getElementById('dropdownMenu');
+
+    profileMenu.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle('active');
+    });
+
+    window.addEventListener('click', () => {
+      dropdown.classList.remove('active');
+    });
+
+    const fileInput = document.getElementById('fileUpload');
+    const uploadSection = document.querySelector('.upload-section');
+    
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        uploadSection.style.borderColor = 'var(--success-green)';
+        uploadSection.style.background = 'rgba(16, 185, 129, 0.1)';
+        document.querySelector('.upload-text').textContent = `Selected: ${e.target.files[0].name}`;
+      }
+    });
+
+    // Drag and drop functionality
+    uploadSection.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadSection.style.borderColor = 'var(--accent-gray)';
+      uploadSection.style.background = 'rgba(100, 116, 139, 0.1)';
+    });
+
+    uploadSection.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      uploadSection.style.borderColor = 'var(--border-color)';
+      uploadSection.style.background = 'rgba(100, 116, 139, 0.02)';
+    });
+
+    uploadSection.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        fileInput.files = files;
+        uploadSection.style.borderColor = 'var(--success-green)';
+        uploadSection.style.background = 'rgba(16, 185, 129, 0.1)';
+        document.querySelector('.upload-text').textContent = `Selected: ${files[0].name}`;
+      }
+    });
+  </script>
+</body>
+</html>

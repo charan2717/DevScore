@@ -1,0 +1,257 @@
+/* Added comprehensive CSS styling with white theme */
+    :root {
+      --primary-color: #2563eb;
+      --primary-hover: #1d4ed8;
+      --background: #ffffff;
+      --surface: #f8fafc;
+      --border: #e2e8f0;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --error: #ef4444;
+      --warning: #f59e0b;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --radius: 8px;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--surface);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      transition: all 0.3s ease;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .settings-section {
+      background: var(--background);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .settings-section h2 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    form {
+      margin-bottom: 2rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-family: var(--font-sans);
+      background-color: var(--background);
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+      margin-bottom: 1.5rem;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button[type="submit"] {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    button[type="submit"]:hover {
+      background: var(--primary-hover);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+
+    button[type="submit"]:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: var(--border);
+      margin: 2rem 0;
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .theme-toggle label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 500;
+      margin: 0;
+      text-transform: none;
+      letter-spacing: normal;
+      font-size: 1rem;
+    }
+
+    .theme-toggle input[type="checkbox"] {
+      width: 44px;
+      height: 24px;
+      margin-right: 0.75rem;
+      margin-bottom: 0;
+      appearance: none;
+      background: var(--border);
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle input[type="checkbox"]:checked {
+      background: var(--primary-color);
+    }
+
+    .theme-toggle input[type="checkbox"]::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      top: 2px;
+      left: 2px;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .theme-toggle input[type="checkbox"]:checked::before {
+      transform: translateX(20px);
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      --background: #1e293b;
+      --surface: #0f172a;
+      --border: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+    }
+
+    body.dark-mode .settings-section {
+      background: var(--background);
+      border: 1px solid var(--border);
+    }
+
+    body.dark-mode input[type="text"],
+    body.dark-mode input[type="password"],
+    body.dark-mode textarea {
+      background: var(--surface);
+      border-color: var(--border);
+      color: var(--text-primary);
+    }
+
+    body.dark-mode .theme-toggle {
+      background: var(--background);
+      border-color: var(--border);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      main {
+        padding: 1rem 0.5rem;
+      }
+
+      .settings-section {
+        padding: 1.5rem;
+        margin: 0 0.5rem 1rem;
+      }
+
+      .settings-section h2 {
+        font-size: 1.5rem;
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        padding: 1rem;
+      }
+    }
+
+    /* Form validation styles */
+    input:invalid {
+      border-color: var(--error);
+    }
+
+    input:valid {
+      border-color: var(--success);
+    }
+
+    /* Loading state for buttons */
+    button[type="submit"]:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Enhanced focus styles for accessibility */
+    input:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+    }

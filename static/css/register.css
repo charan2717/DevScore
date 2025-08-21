@@ -1,0 +1,419 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .register-container {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e5e5e5;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 420px;
+      padding: 32px;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 8px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .input-row {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    .input {
+      padding: 12px 16px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.2s;
+      background: white;
+    }
+
+    .input:focus {
+      outline: none;
+      border-color: #000;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .input:hover {
+      border-color: #9ca3af;
+    }
+
+    .select {
+      padding: 12px 16px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 16px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .select:focus {
+      outline: none;
+      border-color: #000;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .select:hover {
+      border-color: #9ca3af;
+    }
+
+    .password-requirements {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .requirement {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+
+    .requirement-icon {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #e5e5e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      color: white;
+    }
+
+    .requirement.valid .requirement-icon {
+      background: #16a34a;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 4px 0;
+    }
+
+    .checkbox {
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: #000;
+    }
+
+    .checkbox-label {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+
+    .checkbox-label a {
+      color: #000;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .checkbox-label a:hover {
+      text-decoration: underline;
+    }
+
+    .btn {
+      padding: 12px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+    }
+
+    /* Fixed button styling - now clearly visible */
+    .btn-primary {
+      background: #000 !important;
+      color: white !important;
+      width: 100%;
+      border: 2px solid #000 !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:hover {
+      background: #333 !important;
+      border-color: #333 !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0px);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-google {
+      background: white !important;
+      color: #1a1a1a !important;
+      border: 1px solid #d1d5db !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+      width: 100%;
+    }
+
+    .btn-google:hover {
+      background: #f9fafb !important;
+      border-color: #9ca3af !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 24px 0;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e5e5e5;
+    }
+
+    .divider::before {
+      margin-right: 16px;
+    }
+
+    .divider::after {
+      margin-left: 16px;
+    }
+
+    .login-section {
+      text-align: center;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e5e5;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .login-link {
+      color: #000;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .login-link:hover {
+      text-decoration: underline;
+    }
+
+    .google-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Error/Success Messages */
+    .message {
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .message-error {
+      background: white;
+      color: #dc2626;
+      border: 1px solid #dc2626;
+    }
+
+    .message-success {
+      background: white;
+      color: #16a34a;
+      border: 1px solid #16a34a;
+    }
+
+    /* Loading State */
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s ease-in-out infinite;
+      margin-left: 8px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Enhanced Focus States */
+    .input:focus-visible,
+    .select:focus-visible,
+    .checkbox:focus-visible {
+      outline: 2px solid #000;
+      outline-offset: 2px;
+    }
+
+    /* Better Button States */
+    .btn:focus-visible {
+      outline: 2px solid #000;
+      outline-offset: 2px;
+    }
+
+    /* Improved Checkbox Styling */
+    .checkbox:checked {
+      background-color: #000;
+      border-color: #000;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .register-container {
+        padding: 24px;
+        margin: 16px;
+        max-width: none;
+      }
+
+      .title {
+        font-size: 20px;
+      }
+
+      .input-row {
+        gap: 20px;
+      }
+
+      body {
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .register-container {
+        padding: 20px;
+      }
+
+      .header {
+        margin-bottom: 24px;
+      }
+
+      .form {
+        gap: 16px;
+      }
+    }
+
+    /* Enhanced Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .register-container {
+        animation: none;
+      }
+
+      .btn,
+      .input,
+      .select {
+        transition: none;
+      }
+    }
+
+    /* Force button visibility in all scenarios */
+    button[type="submit"],
+    .btn-primary {
+      background: #000 !important;
+      color: white !important;
+      border: 2px solid #000 !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      display: block !important;
+    }
+
+    button[type="submit"]:hover,
+    .btn-primary:hover {
+      background: #333 !important;
+      color: white !important;
+      border-color: #333 !important;
+    }

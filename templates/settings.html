@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
+</head>
+
+<body>
+  <main>
+    <section class="settings-section">
+      <h2>Account Settings</h2>
+
+      <!-- Change Password Form -->
+      <form id="passwordForm">
+        <label for="currentPassword">Current Password:</label>
+        <input type="password" id="currentPassword" required>
+
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" required>
+
+        <label for="confirmPassword">Confirm New Password:</label>
+        <input type="password" id="confirmPassword" required>
+
+        <button type="submit">Change Password</button>
+      </form>
+
+      <hr>
+
+      <!-- Theme Toggle -->
+      <div class="theme-toggle">
+        <label>
+          <input type="checkbox" id="darkModeToggle">
+          Enable Dark Mode
+        </label>
+      </div>
+
+      <hr>
+
+      <!-- Example: Update Profile Info -->
+      <form id="profileForm">
+        <label for="displayName">Display Name:</label>
+        <input type="text" id="displayName" value="{{ user.get('name', '') }}" required>
+
+        <label for="bio">Bio:</label>
+        <textarea id="bio">{{ user.get('bio', '') }}</textarea>
+
+        <button type="submit">Update Profile</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // -------------------------
+    // Password Change
+    // -------------------------
+    document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const currentPassword = document.getElementById('currentPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (newPassword !== confirmPassword) {
+        alert("New passwords do not match!");
+        return;
+      }
+
+      // Example: Send request to Flask route '/update_password'
+      const response = await fetch('/update_password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ currentPassword, newPassword })
+      });
+
+      const result = await response.json();
+      alert(result.message);
+    });
+
+    // -------------------------
+    // Dark Mode Toggle
+    // -------------------------
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('change', () => {
+      document.body.classList.toggle('dark-mode', darkModeToggle.checked);
+      localStorage.setItem('darkMode', darkModeToggle.checked);
+    });
+
+    // Load dark mode preference on page load
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+      darkModeToggle.checked = true;
+    }
+
+    // -------------------------
+    // Profile Update
+    // -------------------------
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const displayName = document.getElementById('displayName').value;
+      const bio = document.getElementById('bio').value;
+
+      const response = await fetch('/update_profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ displayName, bio })
+      });
+
+      const result = await response.json();
+      alert(result.message);
+    });
+
+  </script>
+</body>
+
+</html>

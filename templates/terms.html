@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms and Conditions</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/terms.css') }}">
+</head>
+
+<body>
+  <div class="container">
+    <h2>Terms and Conditions</h2>
+    <div class="terms-box">
+      <p><strong>Welcome!</strong> Please read the terms carefully before using our application.</p>
+      <p>1. You agree to provide accurate profile information.</p>
+      <p>2. You consent to data being used for application purposes only.</p>
+      <p>3. You will not misuse or attempt to hack the system.</p>
+      <p>4. Violation of these terms may result in account suspension.</p>
+      <p>5. Your submitted projects will be evaluated across several key areas to ensure quality and completeness. These
+        areas include code diversity, documentation clarity, proper file structure, presence of tests, and overall
+        algorithmic complexity. The evaluation is designed to encourage best practices and comprehensive project
+        development.</p>
+      <p>... (add more as needed) ...</p>
+    </div>
+    <p>By clicking "I Accept", you agree to these terms and conditions.</p>
+    <form method="POST">
+      <button type="submit">I Accept</button>
+    </form>
+  </div>
+</body>
+
+</html>

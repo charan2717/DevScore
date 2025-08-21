@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Your Projects</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}">
+</head>
+<body>
+<header>
+<h1>Your Projects</h1>
+<a href="{{ url_for('home') }}">Home</a>
+</header>
+<div class="container">
+    <ul class="project-list">
+        {% if projects %}
+            {% for project in projects %}
+            <li><a href="{{ url_for('view_project', project_name=project) }}">{{ project }}</a></li>
+            {% endfor %}
+        {% else %}
+            <li>No projects uploaded yet.</li>
+        {% endif %}
+    </ul>
+</div>
+</body>
+</html>

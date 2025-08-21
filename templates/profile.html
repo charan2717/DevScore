@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Complete Profile</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}" /> 
+</head>
+
+<body>
+  <div class="container">
+    <h2>Complete Your Profile</h2>
+
+    {% if profile and not edit_mode %}
+    <!-- Display Profile Info -->
+    <div class="profile-display">
+      <p><strong>Full Name:</strong> {{ profile.name }}</p>
+      <p><strong>Age:</strong> {{ profile.age }}</p>
+      <p><strong>Bio:</strong> {{ profile.bio }}</p>
+      <a href="{{ url_for('profile', edit=1) }}"><button class="edit-btn">Edit Profile</button></a>
+    </div>
+    {% else %}
+    <!-- Show form for new profile or edit -->
+    <form method="POST">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" name="name" id="name" value="{{ profile.name if profile else '' }}" required />
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input type="number" name="age" id="age" value="{{ profile.age if profile else '' }}" required />
+      </div>
+
+      <div class="form-group">
+        <label for="bio">Bio</label>
+        <textarea name="bio" id="bio" rows="4" required>{{ profile.bio if profile else '' }}</textarea>
+      </div>
+
+      <button type="submit">Save & Continue</button>
+    </form>
+    {% endif %}
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create your New Labs account</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+</head>
+
+<body>
+  <div class="register-container">
+    <div class="header">
+      <div class="logo">DevScore</div>
+      <h1 class="title">Create your account</h1>
+      <p class="subtitle">Join thousands of developers building with AI</p>
+    </div>
+
+    <!-- Error/Success Messages (uncomment when needed) -->
+    <!-- <div class="message message-error">
+            Username already exists. Please choose a different one.
+        </div> -->
+
+    <form class="form" method="POST" action="/register">
+      <div class="input-row">
+        <div class="input-group">
+          <label class="label" for="email">Email address</label>
+          <input class="input" type="email" id="email" name="email" placeholder="john@example.com" required
+            autocomplete="email">
+        </div>
+        <div class="input-group">
+          <label class="label" for="password">Password</label>
+          <input class="input" type="password" id="password" name="password" placeholder="Create a strong password"
+            required autocomplete="new-password">
+        </div>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="terms" name="terms" class="checkbox" required>
+        <label for="terms" class="checkbox-label">
+          I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>
+        </label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="newsletter" name="newsletter" class="checkbox">
+        <label for="newsletter" class="checkbox-label">
+          Send me updates about new AI models and features
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        Create account
+        <!-- Loading state (uncomment when needed) -->
+        <!-- <span class="loading"></span> -->
+      </button>
+    </form>
+
+    <div class="login-section">
+      Already have an account?
+      <a href="/login" class="login-link">Sign in</a>
+    </div>
+  </div>
+</body>
+
+</html>
