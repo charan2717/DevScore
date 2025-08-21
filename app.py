@@ -135,37 +135,38 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-@app.route('/profile', methods=['GET','POST'])
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
+    # Fetch profile if exists
     profile = profiles_col.find_one({"user_id": session['user_id']})
 
     if request.method == 'POST':
-        name = request.form['name']
-        age = request.form['age']
-        bio = request.form['bio']
+        name = request.form.get('name', '').strip()
+        age = request.form.get('age', '').strip()
+        bio = request.form.get('bio', '').strip()
 
+        # Update or insert profile
         profiles_col.update_one(
             {"user_id": session['user_id']},
             {"$set": {"name": name, "age": age, "bio": bio}},
             upsert=True
         )
 
+        # Mark profile as completed
         users_col.update_one(
             {"_id": ObjectId(session['user_id'])},
             {"$set": {"profile_completed": True}}
         )
 
-        # Reload profile after update
-        profile = profiles_col.find_one({"user_id": session['user_id']})
+        # Redirect to terms page after profile completion
+        return redirect(url_for('terms'))
 
-        # Redirect to profile display page
-        return redirect(url_for('profile'))
-
-    # Check if profile exists and show filled info
+    # For GET requests, show the profile form
     return render_template('profile.html', profile=profile)
+
 
 
 @app.route('/update_profile', methods=['POST'])
